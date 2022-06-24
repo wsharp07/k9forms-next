@@ -3,9 +3,9 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getRabiesInfo = async (animalId: string): Promise<any> => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
-  const token = process.env.NEXT_PUBLIC_RG_TOKEN;
-  const tokenHash = process.env.NEXT_PUBLIC_RG_HASH;
+  const API_URL = process.env.API_URL || "";
+  const token = process.env.RG_TOKEN;
+  const tokenHash = process.env.RG_HASH;
   const response = await axios.post(API_URL, {
     token,
     tokenHash,

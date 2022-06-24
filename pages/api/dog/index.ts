@@ -6,9 +6,9 @@ const getAllAvailable = async (
   page: number = 1,
   pageSize: number = 100
 ): Promise<any> => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
-  const token = process.env.NEXT_PUBLIC_RG_TOKEN;
-  const tokenHash = process.env.NEXT_PUBLIC_RG_HASH;
+  const API_URL = process.env.API_URL || '';
+  const token = process.env.RG_TOKEN;
+  const tokenHash = process.env.RG_HASH;
   const resultStart = (page - 1) * pageSize;
   const resultEnd = page * pageSize;
 
@@ -54,7 +54,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<IDog[]>
 ) {
-  if (!process.env.NEXT_PUBLIC_RG_TOKEN || !process.env.NEXT_PUBLIC_RG_HASH) {
+  if (!process.env.RG_TOKEN || !process.env.RG_HASH) {
     res.status(400);
     return;
   }
