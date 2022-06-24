@@ -14,7 +14,7 @@ const FormSignature = ({ isEditable }: IFormSignatureProps) => {
   //David Smith, D.V.M., #6901005915
 
   useEffect(() => {
-    fetch(`/config`)
+    fetch(`/api/config`)
       .then((response) => {
         return response.json();
       })

@@ -54,15 +54,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<IDog[]>
 ) {
-  const page = Number(req.query.page);
-  const pageSize = Number(req.query.pageSize);
-
   if (!process.env.NEXT_PUBLIC_RG_TOKEN || !process.env.NEXT_PUBLIC_RG_HASH) {
     res.status(400);
     return;
   }
 
-  let animal = await getAllAvailable(page, pageSize);
+  let animal = await getAllAvailable();
   let result = Object.values(animal).map((x: any) => {
     return {
       id: x.animalID,

@@ -46,7 +46,7 @@ const Home: NextPage = () => {
                 <th scope="row">{index + 1}</th>
                 <td>{listValue.id}</td>
                 <td>{listValue.name}</td>
-                <td>
+                <td className="buttons">
                   <Link href={`/forms/altered/${listValue.id}`} passHref>
                     <a className="btn btn-primary">Spay/Neuter</a>
                   </Link>

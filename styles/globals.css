@@ -36,6 +36,10 @@ div.topPad {
   font-style: italic;
 }
 
+td.buttons > a {
+  margin-left: 10px;
+}
+
 input.print {
   border: none;
   box-shadow: none;

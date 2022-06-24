@@ -8,8 +8,8 @@ import FormHeader from "@components/Forms/FormHeader";
 import FormSignature from "@components/Forms/FormSignature";
 import { IDog } from "@models/IDog";
 import { IRabiesInfo } from "@models/IRabiesInfo";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCopy, faFile } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faCopy, faFile } from "@fortawesome/free-solid-svg-icons";
 import { getAlteredText } from "@utils/formatText";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,25 +20,29 @@ const RabiesPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const saveToPdf = (isDouble: Boolean): void => {
-    let $inputs = document.querySelector("input");
+  const saveToPdf = async (isDouble: Boolean) => {
+    debugger;
+    const $inputs = document.querySelector("input");
     $inputs?.classList.add("print");
 
-    html2canvas(document.querySelector("#altered-form")!)
-      .then((canvas) => {
-        var imgData = canvas.toDataURL("image/png");
-        var doc = new jsPDF("p", "in", "letter");
+    const $rabiesForm: HTMLElement | null =
+      document.querySelector("#rabies-form");
 
-        doc.addImage(imgData, "PNG", 0.25, 0.25, 8, 4.5);
+    if (!$rabiesForm) return;
 
-        if (isDouble) {
-          doc.addImage(imgData, "PNG", 0.25, 5.5, 8, 4.5);
-        }
+    const canvas = await html2canvas($rabiesForm);
+    const imgData = canvas.toDataURL("image/png");
+    const doc = new jsPDF("p", "in", "letter");
 
-        doc.autoPrint();
-        window.open(doc.output("bloburl"), "_blank");
-      })
-      .then(() => $inputs?.classList.remove("print"));
+    doc.addImage(imgData, "PNG", 0.25, 0.25, 8, 4.75);
+
+    if (isDouble) {
+      doc.addImage(imgData, "PNG", 0.25, 5.5, 8, 4.75);
+    }
+
+    doc.autoPrint();
+    window.open(doc.output("bloburl"), "_blank");
+    $inputs?.classList.remove("print");
   };
 
   useEffect(() => {
