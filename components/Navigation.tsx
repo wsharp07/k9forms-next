@@ -1,3 +1,5 @@
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 
@@ -9,8 +11,10 @@ const Navigation = () => {
         <NavbarToggler />
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link href="/admin" className="nav-link">
-              <i className="fas fa-cog"></i>
+            <Link href="/admin" passHref>
+              <a className="nav-link">
+              <FontAwesomeIcon icon={faCog} />
+              </a>
             </Link>
           </li>
         </ul>
