@@ -10,6 +10,7 @@ import { getAlteredText } from '@utils/formatText';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import FormToolbar from '@components/Forms/FormToolbar';
+import { FormType } from '@models/FormType';
 
 const RabiesPage: NextPage = () => {
   const [dog, setDog] = useState({
@@ -53,7 +54,7 @@ const RabiesPage: NextPage = () => {
 
   return (
     <div>
-      <FormToolbar formName="rabies-form" />
+      <FormToolbar formName="rabies-form" formType={FormType.RABIES} />
       <div id="rabies-form">
         <FormHeader formName="Rabies" />
         <br />

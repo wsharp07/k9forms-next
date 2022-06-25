@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Navigation />
-      <main role="main" className="container">
+      <main role="main" className="container" style={{ maxWidth: "1140px" }}>
         <Component {...pageProps} />
       </main>
     </>

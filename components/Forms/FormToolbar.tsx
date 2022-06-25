@@ -1,5 +1,6 @@
 import { faArrowLeft, faFile, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormType } from '@models/FormType';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import router from 'next/router';
@@ -7,22 +8,33 @@ import { Button } from 'reactstrap';
 
 interface IFormToolbarProps {
   formName: string;
+  formType: FormType
 }
 
-const FormToolbar = ({ formName }: IFormToolbarProps) => {
+const FormToolbar = ({ formName, formType }: IFormToolbarProps) => {
+
+  const addImage = (doc: jsPDF, imgData: string, formType: FormType, isDouble: boolean = false) => {
+    const width = 8;
+    const height = formType === FormType.RABIES ? 4.75 : 4.5;
+    const horizontalOffset = 0.25;
+    const verticalOffset = isDouble ? height + 0.25 : 0.25;
+
+    doc.addImage(imgData, 'PNG', horizontalOffset, verticalOffset, width, height);
+  }
+
   const saveToPdf = (isDouble: Boolean): void => {
     let $inputs = document.querySelector('input');
     $inputs?.classList.add('print');
 
     html2canvas(document.querySelector(`#${formName}`)!)
       .then((canvas) => {
-        var imgData = canvas.toDataURL('image/png');
-        var doc = new jsPDF('p', 'in', 'letter');
+        const imgData = canvas.toDataURL('image/png');
+        const doc = new jsPDF('p', 'in', 'letter');
 
-        doc.addImage(imgData, 'PNG', 0.25, 0.25, 8, 3.8);
+        addImage(doc, imgData, formType);
 
         if (isDouble) {
-          doc.addImage(imgData, 'PNG', 0.25, 5.5, 8, 3.8);
+          addImage(doc, imgData, formType, true);
         }
 
         doc.autoPrint();

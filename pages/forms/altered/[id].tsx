@@ -7,6 +7,7 @@ import FormSignature from '@components/Forms/FormSignature';
 import { IDog } from '@models/IDog';
 
 import FormToolbar from '@components/Forms/FormToolbar';
+import { FormType } from '@models/FormType';
 
 const AlteredPage: NextPage = () => {
   const [dog, setDog] = useState({
@@ -42,7 +43,7 @@ const AlteredPage: NextPage = () => {
 
   return (
     <div>
-      <FormToolbar formName="altered-form" />
+      <FormToolbar formName="altered-form" formType={FormType.ALTERED} />
       <div id="altered-form">
         <FormHeader formName="Spay/Neuter" />
         <br />
