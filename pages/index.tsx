@@ -3,18 +3,23 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 import { IDog } from '@models/IDog';
+import Loading from '@components/Loading';
 
 const Home: NextPage = () => {
   const [dogs, setDogs] = useState([] as IDog[]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const response = await fetch('/api/dog');
         const dogs = await response.json();
         setDogs(dogs);
       } catch (e) {
         console.error(e);
+      } finally {
+        setIsLoading(false);
       }
     })();
 
@@ -23,7 +28,8 @@ const Home: NextPage = () => {
     };
   }, []);
 
-  return (
+  
+  return isLoading && <Loading /> || (
     <div>
       <Table>
         <thead>

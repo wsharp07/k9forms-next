@@ -11,32 +11,28 @@ import { getAlteredText } from '@utils/formatText';
 import 'react-datepicker/dist/react-datepicker.css';
 import FormToolbar from '@components/Forms/FormToolbar';
 import { FormType } from '@models/FormType';
+import Loading from '@components/Loading';
 
 const RabiesPage: NextPage = () => {
-  const [dog, setDog] = useState({
-    name: 'Name',
-    bornOn: 'Born On',
-    color: 'Color',
-    gender: 'Gender',
-    id: 1,
-    vaccinatedOn: 'Vaccinated On',
-    breed: 'Breed',
-    altered: 'N/A',
-  } as IDog);
+  const [dog, setDog] = useState({} as IDog);
   const [rabiesInfo, setRabiesInfo] = useState({} as IRabiesInfo);
+  const [isLoading, setIsLoading] = useState(false);
+  const [surgeon, setSurgeon] = useState('');
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
     if (!id) return;
     (async () => {
+      setIsLoading(true);
       try {
+        
         const response = await fetch(`/api/dog/${id}`);
         const dog = await response.json();
         setDog(dog);
       } catch (e) {
         console.error(e);
-      }
+      } 
 
       try {
         const response = await fetch(`/api/dog/${id}/rabiesInfo`);
@@ -45,6 +41,16 @@ const RabiesPage: NextPage = () => {
       } catch (e) {
         console.error(e);
       }
+
+      try {
+        const response = await fetch(`/api/config`);
+        const data = await response.json();
+        setSurgeon(data.surgeon);
+      } catch (e) {
+        console.error(e);
+      }
+
+      setIsLoading(false);
     })();
 
     return () => {
@@ -52,7 +58,7 @@ const RabiesPage: NextPage = () => {
     };
   }, [id]);
 
-  return (
+  return isLoading && <Loading /> || (
     <div>
       <FormToolbar formName="rabies-form" formType={FormType.RABIES} />
       <div id="rabies-form">
@@ -114,7 +120,7 @@ const RabiesPage: NextPage = () => {
             </Table>
           </div>
 
-          <FormSignature isEditable={true} />
+          <FormSignature isEditable={true} surgeon={surgeon} />
         </div>
       </div>
     </div>

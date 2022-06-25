@@ -7,21 +7,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 interface IFormSignatureProps {
   isEditable: boolean;
+  surgeon: string;
 }
 
-const FormSignature = ({ isEditable }: IFormSignatureProps) => {
-  const [surgeon, setSurgeon] = useState('');
+const FormSignature = ({ isEditable, surgeon }: IFormSignatureProps) => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
-  useEffect(() => {
-    fetch(`/api/config`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setSurgeon(data.surgeon);
-      });
-  }, []);
 
   return (
     <div className="col-md-12">

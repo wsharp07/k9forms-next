@@ -8,18 +8,12 @@ import { IDog } from '@models/IDog';
 
 import FormToolbar from '@components/Forms/FormToolbar';
 import { FormType } from '@models/FormType';
+import Loading from '@components/Loading';
 
 const AlteredPage: NextPage = () => {
-  const [dog, setDog] = useState({
-    name: 'Name',
-    bornOn: 'Born On',
-    color: 'Color',
-    gender: 'Gender',
-    id: 1,
-    vaccinatedOn: 'Vaccinated On',
-    breed: 'Breed',
-    altered: 'N/A',
-  } as IDog);
+  const [dog, setDog] = useState({} as IDog);
+  const [isLoading, setIsLoading] = useState(false);
+  const [surgeon, setSurgeon] = useState('');
 
   const router = useRouter();
   const { id } = router.query;
@@ -28,12 +22,23 @@ const AlteredPage: NextPage = () => {
     if (!id) return;
     (async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(`/api/dog/${id}`);
         const dog = await response.json();
         setDog(dog);
       } catch (e) {
         console.error(e);
       }
+
+      try {
+        const response = await fetch(`/api/config`);
+        const data = await response.json();
+        setSurgeon(data.surgeon);
+      } catch (e) {
+        console.error(e);
+      }
+
+      setIsLoading(false);
     })();
 
     return () => {
@@ -41,7 +46,7 @@ const AlteredPage: NextPage = () => {
     };
   }, [id]);
 
-  return (
+  return isLoading && <Loading /> || (
     <div>
       <FormToolbar formName="altered-form" formType={FormType.ALTERED} />
       <div id="altered-form">
@@ -87,7 +92,7 @@ const AlteredPage: NextPage = () => {
           </div>
         </div>
 
-        <FormSignature isEditable={true} />
+        <FormSignature isEditable={true} surgeon={surgeon} />
       </div>
     </div>
   );
