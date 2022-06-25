@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { IDog } from "@models/IDog";
-import axios from "axios";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { IDog } from '@models/IDog';
+import axios from 'axios';
 
 const getAllAvailable = async (
   page: number = 1,
@@ -15,34 +15,34 @@ const getAllAvailable = async (
   const response = await axios.post(API_URL, {
     token,
     tokenHash,
-    objectType: "animals",
-    objectAction: "search",
+    objectType: 'animals',
+    objectAction: 'search',
     search: {
       resultStart: resultStart,
       resultLimit: resultEnd,
-      resultSort: "animalID",
-      resultOrder: "asc",
-      calcFoundRows: "Yes",
+      resultSort: 'animalID',
+      resultOrder: 'asc',
+      calcFoundRows: 'Yes',
       filters: [
         {
-          fieldName: "animalStatus",
-          operation: "equal",
-          criteria: "Available",
+          fieldName: 'animalStatus',
+          operation: 'equal',
+          criteria: 'Available',
         },
         {
-          fieldName: "animalSpecies",
-          operation: "equal",
-          criteria: "Dog",
+          fieldName: 'animalSpecies',
+          operation: 'equal',
+          criteria: 'Dog',
         },
       ],
       fields: [
-        "animalID",
-        "animalName",
-        "animalBreed",
-        "animalColor",
-        "animalSex",
-        "animalBirthdate",
-        "animalAltered",
+        'animalID',
+        'animalName',
+        'animalBreed',
+        'animalColor',
+        'animalSex',
+        'animalBirthdate',
+        'animalAltered',
       ],
     },
   });

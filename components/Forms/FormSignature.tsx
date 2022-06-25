@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { Table } from "reactstrap";
-import { toDateTimeString } from "@utils/dateUtils";
-import DatePicker from "react-datepicker";
+import { useEffect, useState } from 'react';
+import { Table } from 'reactstrap';
+import { toDateTimeString } from '@utils/dateUtils';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface IFormSignatureProps {
   isEditable: boolean;
 }
 
 const FormSignature = ({ isEditable }: IFormSignatureProps) => {
-  const [surgeon, setSurgeon] = useState("");
+  const [surgeon, setSurgeon] = useState('');
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
-  //David Smith, D.V.M., #6901005915
 
   useEffect(() => {
     fetch(`/api/config`)

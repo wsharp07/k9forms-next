@@ -1,47 +1,47 @@
-import { IDog } from "@models/IDog";
-import axios from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { IDog } from '@models/IDog';
+import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const getDogById = async (animalId: string): Promise<any> => {
-  const API_URL = process.env.API_URL || "";
+  const API_URL = process.env.API_URL || '';
   const token = process.env.RG_TOKEN;
   const tokenHash = process.env.RG_HASH;
   const response = await axios.post(API_URL, {
     token,
     tokenHash,
-    objectType: "animals",
-    objectAction: "search",
+    objectType: 'animals',
+    objectAction: 'search',
     search: {
       resultStart: 0,
       resultLimit: 2,
-      resultSort: "animalID",
-      resultOrder: "asc",
-      calcFoundRows: "Yes",
+      resultSort: 'animalID',
+      resultOrder: 'asc',
+      calcFoundRows: 'Yes',
       filters: [
         {
-          fieldName: "animalStatus",
-          operation: "equal",
-          criteria: "Available",
+          fieldName: 'animalStatus',
+          operation: 'equal',
+          criteria: 'Available',
         },
         {
-          fieldName: "animalSpecies",
-          operation: "equal",
-          criteria: "Dog",
+          fieldName: 'animalSpecies',
+          operation: 'equal',
+          criteria: 'Dog',
         },
         {
-          fieldName: "animalID",
-          operation: "equal",
+          fieldName: 'animalID',
+          operation: 'equal',
           criteria: animalId,
         },
       ],
       fields: [
-        "animalID",
-        "animalName",
-        "animalBreed",
-        "animalColor",
-        "animalSex",
-        "animalBirthdate",
-        "animalAltered",
+        'animalID',
+        'animalName',
+        'animalBreed',
+        'animalColor',
+        'animalSex',
+        'animalBirthdate',
+        'animalAltered',
       ],
     },
   });
@@ -56,7 +56,7 @@ export default async function handler(
   const animalId = req.query.id as string;
 
   if (!animalId) {
-    res.send("You must specify and animalId");
+    res.send('You must specify and animalId');
     return;
   }
 

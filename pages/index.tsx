@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Table } from "reactstrap";
-import { IDog } from "@models/IDog";
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Table } from 'reactstrap';
+import { IDog } from '@models/IDog';
 
 const Home: NextPage = () => {
   const [dogs, setDogs] = useState([] as IDog[]);
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch("/api/dog");
+        const response = await fetch('/api/dog');
         const dogs = await response.json();
         setDogs(dogs);
       } catch (e) {

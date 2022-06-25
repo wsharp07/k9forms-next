@@ -1,7 +1,7 @@
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
-import { Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import { Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 
 const Navigation = () => {
   return (
@@ -13,7 +13,7 @@ const Navigation = () => {
           <li className="nav-item">
             <Link href="/admin" passHref>
               <a className="nav-link">
-              <FontAwesomeIcon icon={faCog} />
+                <FontAwesomeIcon icon={faCog} />
               </a>
             </Link>
           </li>

@@ -1,12 +1,12 @@
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import { NextPage } from "next";
-import { useEffect, useState } from "react";
-import { Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import { NextPage } from 'next';
+import { useEffect, useState } from 'react';
+import { Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 const AdminPage: NextPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [surgeon, setSurgeon] = useState("");
+  const [surgeon, setSurgeon] = useState('');
 
   const onSurgeonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSurgeon(e.target.value);
@@ -18,8 +18,8 @@ const AdminPage: NextPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/config", {
-        method: "POST",
+      const response = await fetch('/api/config', {
+        method: 'POST',
         body: JSON.stringify({ surgeon }),
       });
       await response.json();
@@ -52,11 +52,11 @@ const AdminPage: NextPage = () => {
     <div className="topPad">
       <Alert
         color="success"
-        style={{ display: showSuccess ? "block" : "none" }}
+        style={{ display: showSuccess ? 'block' : 'none' }}
       >
         Update Successful!
       </Alert>
-      <Alert color="danger" style={{ display: showError ? "block" : "none" }}>
+      <Alert color="danger" style={{ display: showError ? 'block' : 'none' }}>
         Update Failed!
       </Alert>
       <h2>Administration</h2>

@@ -1,23 +1,23 @@
 export class DataParser {
-  private static expOpt = ["exp", "expiration", "expires"];
-  private static mfgOpt = ["mfg", "manf", "manufacturer"];
+  private static expOpt = ['exp', 'expiration', 'expires'];
+  private static mfgOpt = ['mfg', 'manf', 'manufacturer'];
   private static serialOpt = [
-    "serial",
-    "serial #",
-    "serial num",
-    "serial number",
+    'serial',
+    'serial #',
+    'serial num',
+    'serial number',
   ];
 
   public static rabiesMetaParser = (metaString: string) => {
     let result = {
-      expiration: "",
-      manufacturer: "",
-      serial: "",
+      expiration: '',
+      manufacturer: '',
+      serial: '',
     };
 
     metaString
-      .split("\r\n")
-      .map((x) => x.split(":"))
+      .split('\r\n')
+      .map((x) => x.split(':'))
       .map((x) => x.map((y) => y.trim()))
       .reduce((map, obj) => {
         if (this.expOpt.indexOf(obj[0].toLowerCase()) > -1) {

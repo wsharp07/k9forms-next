@@ -4,12 +4,12 @@ export const getAlteredText = (altered: string, gender: string) => {
   let isAltered = altered.toLowerCase() === 'yes';
 
   if (isAltered && gender.toLowerCase() === 'female') {
-      return '(Spayed)';
+    return '(Spayed)';
   }
 
   if (isAltered && gender.toLowerCase() === 'male') {
-      return '(Neutered)';
+    return '(Neutered)';
   }
 
   return '';
-}
+};

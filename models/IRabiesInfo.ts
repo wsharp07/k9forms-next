@@ -1,5 +1,5 @@
 export interface IRabiesInfo {
-  id: string,    
+  id: string;
   serialNumber: string;
   manufacturer: string;
   vaccinatedOn: string;

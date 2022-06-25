@@ -1,43 +1,43 @@
-import { DataParser } from "@utils/dataParser";
-import axios from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { DataParser } from '@utils/dataParser';
+import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 const getRabiesInfo = async (animalId: string): Promise<any> => {
-  const API_URL = process.env.API_URL || "";
+  const API_URL = process.env.API_URL || '';
   const token = process.env.RG_TOKEN;
   const tokenHash = process.env.RG_HASH;
   const response = await axios.post(API_URL, {
     token,
     tokenHash,
-    objectType: "animalsJournalEntries",
-    objectAction: "search",
+    objectType: 'animalsJournalEntries',
+    objectAction: 'search',
     search: {
-      resultStart: "0",
-      resultLimit: "100",
-      resultSort: "journalEntryID",
-      resultOrder: "asc",
+      resultStart: '0',
+      resultLimit: '100',
+      resultSort: 'journalEntryID',
+      resultOrder: 'asc',
       filters: [
         {
-          fieldName: "journalEntryAnimalID",
-          operation: "equals",
+          fieldName: 'journalEntryAnimalID',
+          operation: 'equals',
           criteria: animalId,
         },
         {
-          fieldName: "journalEntrytypeDescription",
-          operation: "equals",
-          criteria: "Rabies",
+          fieldName: 'journalEntrytypeDescription',
+          operation: 'equals',
+          criteria: 'Rabies',
         },
       ],
-      filterProcessing: "0",
+      filterProcessing: '0',
       fields: [
-        "journalEntryID",
-        "journalEntryAnimalID",
-        "journalEntryDate",
-        "journalEntryEntrytypeID",
-        "journalEntrytypeDescription",
-        "journalEntrytypeCategoryName",
-        "journalEntryDueDate",
-        "journalEntryComment",
+        'journalEntryID',
+        'journalEntryAnimalID',
+        'journalEntryDate',
+        'journalEntryEntrytypeID',
+        'journalEntrytypeDescription',
+        'journalEntrytypeCategoryName',
+        'journalEntryDueDate',
+        'journalEntryComment',
       ],
     },
   });
@@ -51,7 +51,7 @@ export default async function handler(
   const animalId = req.query.id as string;
 
   if (!animalId) {
-    res.send("You must specify and animalId");
+    res.send('You must specify and animalId');
   }
 
   let rabiesInfo = await getRabiesInfo(animalId);
