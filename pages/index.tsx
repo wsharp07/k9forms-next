@@ -4,31 +4,12 @@ import { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 import { IDog } from '@models/IDog';
 import Loading from '@components/Loading';
+import { useQuery } from 'react-query';
+import { fetchDogs } from '@app/queries/dog.query';
 
 const Home: NextPage = () => {
-  const [dogs, setDogs] = useState([] as IDog[]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, error, data } = useQuery("dogs", fetchDogs);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch('/api/dog');
-        const dogs = await response.json();
-        setDogs(dogs);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-
-    return () => {
-      // this now gets called when the component unmounts
-    };
-  }, []);
-
-  
   return isLoading && <Loading /> || (
     <div>
       <Table>
@@ -41,12 +22,12 @@ const Home: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {dogs.length <= 0 && (
+          {data?.length || 0 <= 0 && (
             <tr>
               <td colSpan={4}>No available dogs found</td>
             </tr>
           )}
-          {dogs.map((listValue, index) => {
+          {data?.map((listValue, index) => {
             return (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>

@@ -45,7 +45,7 @@ const FormToolbar = ({ formName, formType }: IFormToolbarProps) => {
 
   return (
     <div className="form-toolbar">
-      <Button variant="primary" onClick={() => router.back()}>
+      <Button variant="primary" onClick={() => router.push('/')}>
         <FontAwesomeIcon icon={faArrowLeft} />
         &nbsp; Back
       </Button>

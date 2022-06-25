@@ -1,129 +1,107 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 import FormHeader from '@components/Forms/FormHeader';
 import FormSignature from '@components/Forms/FormSignature';
-import { IDog } from '@models/IDog';
-import { IRabiesInfo } from '@models/IRabiesInfo';
 import { getAlteredText } from '@utils/formatText';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import FormToolbar from '@components/Forms/FormToolbar';
 import { FormType } from '@models/FormType';
 import Loading from '@components/Loading';
+import { useQuery } from 'react-query';
+import { fetchConfig } from '@app/queries/config.query';
+import { fetchDogById } from '@app/queries/dog.query';
+import { fetchRabiesInfo } from '@app/queries/rabies.query';
 
 const RabiesPage: NextPage = () => {
-  const [dog, setDog] = useState({} as IDog);
-  const [rabiesInfo, setRabiesInfo] = useState({} as IRabiesInfo);
-  const [isLoading, setIsLoading] = useState(false);
-  const [surgeon, setSurgeon] = useState('');
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query.id as string;
+  const {
+    isLoading: isDogLoading,
+    error,
+    data: dog,
+  } = useQuery(['dog', id], () => fetchDogById(id));
+  const { isLoading: isRabiesInfoLoading, data: rabiesInfo } = useQuery(
+    ['rabiesInfo', id],
+    () => fetchRabiesInfo(id)
+  );
+  const { isLoading: isConfigLoading, data: config } = useQuery(
+    'config',
+    fetchConfig
+  );
 
-  useEffect(() => {
-    if (!id) return;
-    (async () => {
-      setIsLoading(true);
-      try {
-        
-        const response = await fetch(`/api/dog/${id}`);
-        const dog = await response.json();
-        setDog(dog);
-      } catch (e) {
-        console.error(e);
-      } 
+  const isLoading = isDogLoading || isRabiesInfoLoading || isConfigLoading;
 
-      try {
-        const response = await fetch(`/api/dog/${id}/rabiesInfo`);
-        const rabiesInfo = await response.json();
-        setRabiesInfo(rabiesInfo);
-      } catch (e) {
-        console.error(e);
-      }
+  return (
+    (isLoading && <Loading />) || (
+      <div>
+        <FormToolbar formName="rabies-form" formType={FormType.RABIES} />
+        <div id="rabies-form">
+          <FormHeader formName="Rabies" />
+          <br />
+          <br />
+          <div className="row">
+            <div className="col-md-4 offset-md-1">
+              <Table borderless className="k9-form">
+                <tbody>
+                  <tr>
+                    <th scope="row">Dog</th>
+                    <td>
+                      {' '}
+                      {dog?.name} ({id})
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Breed</th>
+                    <td>{dog?.breed}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Color</th>
+                    <td>{dog?.color}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Gender</th>
+                    <td>
+                      {dog?.gender}{' '}
+                      {getAlteredText(dog?.altered || '', dog?.gender || '')}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Born</th>
+                    <td>{dog?.bornOn}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
+            <div className="col-md-4 offset-md-1">
+              <Table borderless className="k9-form">
+                <tbody>
+                  <tr>
+                    <th scope="row">Rabies Serial #</th>
+                    <td>{rabiesInfo?.serialNumber}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Manufacturer</th>
+                    <td>{rabiesInfo?.manufacturer}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mfg Expiration</th>
+                    <td>{rabiesInfo?.expiresOn}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Vaccine Due Next On</th>
+                    <td>{rabiesInfo?.dueOn}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
 
-      try {
-        const response = await fetch(`/api/config`);
-        const data = await response.json();
-        setSurgeon(data.surgeon);
-      } catch (e) {
-        console.error(e);
-      }
-
-      setIsLoading(false);
-    })();
-
-    return () => {
-      // this now gets called when the component unmounts
-    };
-  }, [id]);
-
-  return isLoading && <Loading /> || (
-    <div>
-      <FormToolbar formName="rabies-form" formType={FormType.RABIES} />
-      <div id="rabies-form">
-        <FormHeader formName="Rabies" />
-        <br />
-        <br />
-        <div className="row">
-          <div className="col-md-4 offset-md-1">
-            <Table borderless className="k9-form">
-              <tbody>
-                <tr>
-                  <th scope="row">Dog</th>
-                  <td>
-                    {' '}
-                    {dog.name} ({router.query.id})
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Breed</th>
-                  <td>{dog.breed}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Color</th>
-                  <td>{dog.color}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Gender</th>
-                  <td>
-                    {dog.gender} {getAlteredText(dog.altered, dog.gender)}
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">Born</th>
-                  <td>{dog.bornOn}</td>
-                </tr>
-              </tbody>
-            </Table>
+            <FormSignature isEditable={true} surgeon={config?.surgeon || ''} />
           </div>
-          <div className="col-md-4 offset-md-1">
-            <Table borderless className="k9-form">
-              <tbody>
-                <tr>
-                  <th scope="row">Rabies Serial #</th>
-                  <td>{rabiesInfo.serialNumber}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Manufacturer</th>
-                  <td>{rabiesInfo.manufacturer}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Mfg Expiration</th>
-                  <td>{rabiesInfo.expiresOn}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Vaccine Due Next On</th>
-                  <td>{rabiesInfo.dueOn}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
-
-          <FormSignature isEditable={true} surgeon={surgeon} />
         </div>
       </div>
-    </div>
+    )
   );
 };
 
