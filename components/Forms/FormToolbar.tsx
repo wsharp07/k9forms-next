@@ -14,10 +14,10 @@ interface IFormToolbarProps {
 const FormToolbar = ({ formName, formType }: IFormToolbarProps) => {
 
   const addImage = (doc: jsPDF, imgData: string, formType: FormType, isDouble: boolean = false) => {
-    const width = 8;
-    const height = formType === FormType.RABIES ? 4.75 : 4.5;
-    const horizontalOffset = 0.25;
-    const verticalOffset = isDouble ? height + 0.25 : 0.25;
+    const width = 8.25;
+    const height = formType === FormType.RABIES ? 4.25 : 4;
+    const horizontalOffset = 0.125;
+    const verticalOffset = isDouble ? height + 1 : 0.25;
 
     doc.addImage(imgData, 'PNG', horizontalOffset, verticalOffset, width, height);
   }
