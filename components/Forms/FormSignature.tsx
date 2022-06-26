@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Table } from 'reactstrap';
 import { toDateTimeString } from '@utils/dateUtils';
 import DatePicker from 'react-datepicker';
+
+import styles from './FormSignature.module.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -19,9 +21,9 @@ const FormSignature = ({ isEditable, surgeon }: IFormSignatureProps) => {
         <Table borderless>
           <tbody>
             <tr>
-              <td className="signature"></td>
+              <td className={styles.signature}></td>
               <td></td>
-              <td className="signature">
+              <td className={styles.signature}>
                 {isEditable ? (
                   <DatePicker
                     selected={currentDateTime}

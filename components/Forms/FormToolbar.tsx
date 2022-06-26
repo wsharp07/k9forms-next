@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import router from 'next/router';
 import { Button } from 'reactstrap';
+import styles from './FormToolbar.module.css';
 
 interface IFormToolbarProps {
   formName: string;
@@ -44,7 +45,7 @@ const FormToolbar = ({ formName, formType }: IFormToolbarProps) => {
   };
 
   return (
-    <div className="form-toolbar">
+    <div className={styles['form-toolbar']}>
       <Button variant="primary" onClick={() => router.push('/')}>
         <FontAwesomeIcon icon={faArrowLeft} />
         &nbsp; Back

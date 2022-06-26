@@ -1,10 +1,12 @@
+import styles from './FormHeader.module.css';
+
 interface IFormHeaderProps {
   formName: string;
 }
 
 const FormHeader = ({ formName }: IFormHeaderProps) => {
   return (
-    <div className="row k9-header">
+    <div className={`row ${styles['k9-header']}`}>
       <div className="col-md-12">
         <h1>K-9 Stray Rescue League {formName} Certification</h1>
         <h4>2120 Metamora Rd.</h4>
