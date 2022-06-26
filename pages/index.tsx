@@ -22,7 +22,7 @@ const Home: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.length || 0 <= 0 && (
+          {(data?.length || 0) <= 0 && (
             <tr>
               <td colSpan={4}>No available dogs found</td>
             </tr>
