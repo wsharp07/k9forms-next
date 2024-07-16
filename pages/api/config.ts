@@ -1,15 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Redis from 'ioredis';
 
+const getRedisClient = () => {
+  return new Redis(process.env.REDIS_URL!, {
+    connectTimeout: 3000,
+  });
+};
+
 const getSurgeon = async () => {
-  const client = new Redis(process.env.REDIS_URL!);
+  const client = getRedisClient();
   const surgeon = await client.get('surgeon');
   return surgeon;
 };
 
 const setSurgeon = async (surgeon: string) => {
   try {
-    const client = new Redis(process.env.REDIS_URL!);
+    const client = getRedisClient();
     await client.set('surgeon', surgeon);
   } catch (e) {
     console.log(e);

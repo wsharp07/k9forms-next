@@ -7,10 +7,10 @@ const Navigation = () => {
   return (
     <div>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">K-9 Forms</NavbarBrand>
+        <NavbarBrand href="/">🐶 K-9 Forms</NavbarBrand>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link href="/admin" passHref>
+            <Link href="/admin" passHref legacyBehavior>
               <a className="nav-link">
                 <FontAwesomeIcon icon={faCog} />
               </a>

@@ -1,4 +1,3 @@
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap';

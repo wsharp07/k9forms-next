@@ -1,8 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
-import { IDog } from '@models/IDog';
 import Loading from '@components/Loading';
 import { useQuery } from 'react-query';
 import { fetchDogs } from '@app/queries/dog.query';
@@ -34,10 +32,10 @@ const Home: NextPage = () => {
                 <td>{listValue.id}</td>
                 <td>{listValue.name}</td>
                 <td className="buttons">
-                  <Link href={`/forms/altered/${listValue.id}`} passHref>
+                  <Link href={`/forms/altered/${listValue.id}`} passHref legacyBehavior>
                     <a className="btn btn-primary">Spay/Neuter</a>
                   </Link>
-                  <Link href={`/forms/rabies/${listValue.id}`} passHref>
+                  <Link href={`/forms/rabies/${listValue.id}`} passHref legacyBehavior>
                     <a className="btn btn-info">Rabies</a>
                   </Link>
                 </td>
