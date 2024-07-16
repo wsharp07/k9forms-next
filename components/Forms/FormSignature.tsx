@@ -27,7 +27,7 @@ const FormSignature = ({ isEditable, surgeon }: IFormSignatureProps) => {
                 {isEditable ? (
                   <DatePicker
                     selected={currentDateTime}
-                    onChange={(e: Date) => setCurrentDateTime(e)}
+                    onChange={(date) => setCurrentDateTime(date as Date)}
                   />
                 ) : (
                   toDateTimeString(currentDateTime)
